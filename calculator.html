@@ -7,19 +7,11 @@
     <title>Document</title>
     <style>
         h4{
-            width: 50px;
+            width: 70px;
             height: 20px;
-            padding: .8ex;
+            padding: .5ex;
             border: 2px solid #333;
             margin: 0;
-            display:inline-block;
-            overflow-x:hidden;
-        }
-        #num{
-            border-right: transparent;
-        }
-        #num2{
-            border-left: transparent;
         }
         body{
             background-color: #333;
@@ -27,8 +19,9 @@
             place-content: center;
         }
         .btns{
-            margin-top:200px;
-            height: 285px;
+            margin-left: 5em;
+            margin-top:170px;
+            height: 320px;
             width: 212px;
             padding: 10px;
             background-color: cornflowerblue;
@@ -45,10 +38,10 @@
     </style>
 </head>
 <body>
+    <h3 style="color:cornflowerblue ;">NOTE:After pressing equal you can not write till you <strong style="color:maroon;">CLEAR!</strong></h3>
     <div class="btns">
-        <h4 id="num"></h4>
-        <h4 id="num2"></h4>
-        <h4 id="ans"></h1>
+        <h4 id="pas" style="margin-left: 130px;"></h4>
+        <h4 id="num" style="margin-top: 10px; margin-left: 130px;"></h1>
         <button class="btn1" onclick="dn(1)">1</button>
         <button class="btn1" onclick="dn(2)">2</button>
         <button class="btn1" onclick="dn(3)">3</button>
@@ -61,7 +54,7 @@
         <button class="btn" onclick="dn(8)">8</button>
         <button class="btn" onclick="dn(9)">9</button>
         <button class="btn" onclick="equal()">=</button>
-        <button class="btn" onclick="multiply()">*</button>
+        <button class="btn" onclick="multiply()">X</button>
         <button class="btn" onclick="dn(0)">0</button>
         <button class="btn" onclick="division()">/</button>
         <button class="btn" onclick="ac()">AC</button>
@@ -74,56 +67,64 @@
         let minusing = false;
         let multiplying = false;
         let dividing = false;
-        
+        function dge(){
+            const div = parseInt(document.getElementById('num').innerHTML);
+            document.getElementById('pas').innerHTML = div;
+            document.getElementById('num').innerText='';
+        }
         function dn(num){
-            if (!c && !show) {
-                const div = document.getElementById('num');
-                div.innerHTML += num;
-            } else if (c && !show){
-                const div = document.getElementById('num2');
-                div.innerHTML += num;
-            }
+            const div = document.getElementById('num');
+            div.innerHTML += num;
         }
         function multiply(){
             c = true;
             multiplying = true;
+            dge();
         }
         function division(){
             c = true;
             dividing = true;
+            dge();
         }
         function add(){
             c = true;
             adding = true;
+            dge();
         }
         function minus(){
             c = true;
             minusing = true;
+            dge();
+        }
+        function anser(sym, answer){
+            const div = parseInt(document.getElementById('num').innerHTML);
+            let a = " " + sym + " " + div + " " + "=" + " ";
+            document.getElementById('pas').innerHTML += a;
+            document.getElementById('num').innerHTML = answer;
         }
         function equal(){
             let num1 = parseInt(document.getElementById('num').innerHTML);
-            let num2 = parseInt(document.getElementById('num2').innerHTML);
+            let num2 = parseInt(document.getElementById('pas').innerHTML);
             if (adding){
                 answer = num1 + num2;
-                document.getElementById('ans').innerHTML = answer;
+                anser("+", answer);
                 show = true
             } else if (minusing){
                 answer = num1 - num2;
-                document.getElementById('ans').innerHTML = answer;
+                anser("-", answer);
                 show = true
             } else if (multiplying){
                 answer = num1 * num2;
-                document.getElementById('ans').innerHTML = answer;
+                anser("x", answer);
                 show = true
             } else if (dividing){
                 answer = num1 / num2;
-                document.getElementById('ans').innerHTML = answer;
+                anser("/", answer);
                 show = true
             }
         }
         function ac(){
             document.getElementById('num').innerText='';
-            document.getElementById('num2').innerText='';
             show = false;
             c = false;
             multiplying = false;
